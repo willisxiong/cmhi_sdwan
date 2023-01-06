@@ -17,19 +17,19 @@ resource "aws_network_interface" "nic_public" {
 
 resource "aws_network_interface" "nic_private" {
   subnet_id = aws_subnet.private1.id
-  private_ips = ["10.1.2.1"]
+  private_ips = ["10.1.1.1"]
 
   tags = {
     Name = "mpls_access"
   }
 }
 
-resource "aws_network_interface" "nic_private" {
-  subnet_id = aws_subnet.private1.id
+resource "aws_network_interface" "nic_public" {
+  subnet_id = aws_subnet.public1.id
   private_ips = ["10.1.2.1"]
 
   tags = {
-    Name = "mpls_access"
+    Name = "internet_access"
   }
 }
 
