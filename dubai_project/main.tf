@@ -23,3 +23,24 @@ resource "aws_network_interface" "nic_private" {
     Name = "mpls_access"
   }
 }
+
+resource "aws_network_interface" "nic_private" {
+  subnet_id = aws_subnet.private1.id
+  private_ips = ["10.1.2.1"]
+
+  tags = {
+    Name = "mpls_access"
+  }
+}
+
+resource "aws_network_interface_attachment" "internet" {
+  instance_id = aws_instance.sdwan_gw1.id
+  network_interface_id = aws_network_interface.nic_public.id
+  device_index = 0
+}
+
+resource "aws_network_interface_attachment" "mpls" {
+  instance_id = aws_instance.sdwan_gw1.id
+  network_interface_id = aws_network_interface.nic_private.id
+  device_index = 0
+}

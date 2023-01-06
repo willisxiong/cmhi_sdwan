@@ -24,3 +24,16 @@ resource "aws_subnet" "private1" {
     }
 }
 
+resource "aws_vpn_gateway" "vgw" {
+  vpc_id = aws_vpc.cmhi_vpc_1.id
+
+  tags = {
+    Name = "vgw_mpls"
+  }
+}
+
+resource "aws_vpn_gateway_attachment" "vgw_attachment" {
+  vpc_id = aws_vpc.cmhi_vpc_1.id
+  vpn_gateway_id = aws_vpn_gateway.vgw.id
+}
+
