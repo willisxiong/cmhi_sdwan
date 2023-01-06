@@ -8,7 +8,7 @@ resource "aws_instance" "sdwan_gw1" {
 
 resource "aws_network_interface" "nic_public" {
   subnet_id = aws_subnet.public1.id
-  private_ips = ["10.1.1.1"]
+  private_ips = ["10.1.2.1"]
 
   tags = {
     Name = "internet_access"
@@ -21,15 +21,6 @@ resource "aws_network_interface" "nic_private" {
 
   tags = {
     Name = "mpls_access"
-  }
-}
-
-resource "aws_network_interface" "nic_public" {
-  subnet_id = aws_subnet.public1.id
-  private_ips = ["10.1.2.1"]
-
-  tags = {
-    Name = "internet_access"
   }
 }
 
