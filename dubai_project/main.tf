@@ -3,8 +3,11 @@ provider "aws" {
 }
 
 resource "aws_instance" "sdwan_gw1" {
+  ami = "ami-05a3ab9cebecfeadc"
   instance_type = "c5.xlarge"
+  key_name = "cmhi"
 }
+
 
 resource "aws_network_interface" "nic_public" {
   subnet_id = aws_subnet.public1.id
