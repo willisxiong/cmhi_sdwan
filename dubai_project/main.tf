@@ -9,6 +9,22 @@ resource "aws_instance" "sdwan_gw1" {
   source_dest_check           = false
   subnet_id                   = aws_subnet.private1.id
   associate_public_ip_address = false
+  availability_zone = "ap-east-1c"
+}
+
+resource "aws_ebs_volume" "data_vol" {
+  availability_zone = "ap-east-1c"
+  size = 20
+
+  tags = {
+    Name = "data volume"
+  }
+}
+
+resource "aws_volume_attachment" "ebs_att" {
+  device_name = "/dev/sdb"
+  volume_id = aws_ebs_volume.data_vol.id
+  instance_id = aws_instance.sdwan_gw1.id
 }
 
 
@@ -38,6 +54,22 @@ resource "aws_security_group" "sdwan_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "allow ipsec"
+    from_port = 500
+    to_port = 500
+    protocol = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "allow ipsec"
+    from_port = 4500
+    to_port = 4500
+    protocol = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
