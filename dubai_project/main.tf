@@ -1,11 +1,11 @@
 provider "aws" {
-  region = "ap-east-1"
+  region = "me-central-1"
 }
 
 resource "aws_instance" "sdwan_gw1" {
-  ami                         = "ami-05a3ab9cebecfeadc"
+  ami                         = "ami-0d49ed32b8df3ef1f"
   instance_type               = "c5.xlarge"
-  key_name                    = "cmhi_sdwan"
+  key_name                    = "cmhi_sdwan_uae"
   source_dest_check           = false
   subnet_id                   = aws_subnet.private1.id
   associate_public_ip_address = false
